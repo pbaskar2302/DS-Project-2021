@@ -5,3 +5,22 @@ header{
 body{
     font-family: Arial, Helvetica, sans-serif;
 }
+button{
+	background-color: #cf0f29; 
+	border:2px solid #06126b;
+    border-radius: 4px ;
+    font-size: 16px;
+    color: whitesmoke;
+}
+button:hover{
+	background-color: lightcoral;
+	border: 2px solid #06126b;
+    border-radius: 4px ;
+    font-size: 16px;
+}
+.refhead{
+    color: #06126b;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
