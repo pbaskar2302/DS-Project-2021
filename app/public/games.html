@@ -55,56 +55,44 @@
             <table class="table">
               <thead>
                 <tr>  
-                  <th scope="col"> First Name </th>
-                  <th scope="col"> Last Name </th>
-                  <th scope="col"> Age </th>
-                  <th scope="col"> Grade </th>
-                  <th scope="col" v-if="selectedRole.id === 2"> Skill </th>
+                  <th scope="col"> Field </th>
+                  <th scope="col"> Game Time </th>
+                  <th scope="col"> Game Date </th>
                   <th scope="col" v-if="selectedRole.id === 2"> Edit/Delete </th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="ref in referee">
-                  <td>{{ ref.firstName }}</td>
-                  <td>{{ ref.lastName }}</td>
-                  <td>{{ ref.age }}</td>
-                  <td>{{ ref.grade }}</td>
-                  <td v-if="selectedRole.id === 2">{{ ref.skill }}</td>
+                <tr v-for="gam in game">
+                  <td>{{ gam.field }}</td>
+                  <td>{{ gam.gameTime }}</td>
+                  <td>{{ gam.gameDate }}</td>
                   <td v-if="selectedRole.id === 2">
                     <button type="button" 
                       class="btn btn-outline-secondary btn-sm"
-                      v-on:click="selectRefereeToEdit(ref)">Edit</button>
+                      v-on:click="selectGameToEdit(gam)">Edit</button>
                     <button type="button" class="btn btn-outline-secondary btn-sm"
-                      v-on:click="postDeleteReferee(ref)">Delete</button>
+                      v-on:click="postDeleteGame(gam)">Delete</button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <h3 v-if="selectedRole.id === 2">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</h3>
-          <form v-on:submit.prevent="postReferee" v-if="selectedRole.id === 2">
+            <h3 v-if="selectedRole.id === 2">{{ selectedGame === null ? "Add " : "Edit " }} Game</h3>
+          <form v-on:submit.prevent="postGame" v-if="selectedRole.id === 2">
             <div class="mb-3">
-              <label for="firstName" class="form-label"> First Name <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.firstName"
-               class="form-control" id="firstName" required="required">
+              <label for="field" class="form-label"> Field <span class="reqd">*</span></label>
+              <input type="text" v-model="gameForm.field"
+               class="form-control" id="field" required="required">
             </div>
             <div class="mb-3">
-              <label for="lastName" class="form-label"> Last Name <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.lastName" class="form-control" id="lastName" required="required">
+              <label for="gameTime" class="form-label"> Game Time <span class="reqd">*</span></label>
+              <input type="time" v-model="gameForm.gameTime" class="form-control" id="gameTime" required="required">
             </div>
             <div class="mb-3">
-              <label for="age" class="form-label"> Age <span class="reqd">*</span></label>
-              <input type="number" v-model="refereeForm.age" class="form-control" id="age" required="required">
+              <label for="gameDate" class="form-label"> Game Date <span class="reqd">*</span></label>
+              <input type="date" v-model="gameForm.gameDate" class="form-control" id="gameDate" required="required">
             </div>
-            <div class="mb-3">
-              <label for="grade" class="form-label"> Grade <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.grade" class="form-control" id="grade" required="required">
-            </div>
-            <div class="mb-3">
-              <label for="skill" class="form-label"> Skill <span class="reqd">*</span></label>
-              <input type="number" v-model="refereeForm.skill" class="form-control" id="skill" required="required">
-            </div>
-            <button type="submit" class="btn btn-primary">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</button>
-            <button type="button" class="btn btn-outline-secondary" v-if="selectedReferee" v-on:click="resetRefereeForm">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{ selectedGame === null ? "Add " : "Edit " }} Game</button>
+            <button type="button" class="btn btn-outline-secondary" v-if="selectedGame" v-on:click="resetGameForm">Cancel</button>
           </form>
           </div>
         </div>

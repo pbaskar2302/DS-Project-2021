@@ -41,7 +41,7 @@
     <div class=" refhead row align-items-start">
     <h2>Add an Assignment</h2>
     </div>
-    <div id="someApp" class="container">
+    <!-- <div id="someApp" class="container">
         <div v-for="g in game" v-on:click="selectGame(g)"
            :class="['game', {selected: selectedGame && g.gameid == selectedGame.id}]">
             <span class="field">{{ g.field }}</span><br>
@@ -64,13 +64,13 @@
                         <td>{{ ass.gameLevel }}</td>
                         <td v-if="selectedGame.id === 1"> {{ ass.refereeStatus }}</td>
                         <td>{{ ass.refereeAssignmentId }}</td>
-                        <!-- <td>
+                         <td>
                             <button type="button" 
                               class="btn btn-outline-secondary btn-sm"
                               v-on:click="selectAssignmentToEdit(ass)">Edit</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm"
                               v-on:click="postDeleteAssignment(ass)">Delete</button>
-                          </td> -->
+                          </td>
                     </tr>
                 </tbody>
             </table>
@@ -93,6 +93,82 @@
                 </div>
                 <button type="submit" class="btn btn-primary"> Assign </button>
             </form> 
+    </div> -->
+    <div id="someApp" class="container">
+      <div class="col col-4">
+      <div v-for="r in roles" v-on:click="selectRole(r)" 
+      :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
+        <span class="roletype">{{ r.roletype }}</span>
+      </div>
+      </div>
+      <div class="col col-8" v-if="selectedRole">
+        <table class="table">
+          <thead>
+            <tr>  
+              <th scope="col"> Field </th>
+              <th scope="col"> Game Time </th>
+              <th scope="col"> Game Date </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="gam in game" v-on:click="selectGame(gam)" 
+            :class="['game', {selected: selectedGame && gam.id == selectedGame.id}]">
+              <td>{{ gam.field }}</td>
+              <td>{{ gam.gameTime }}</td>
+              <td>{{ gam.gameDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="col col-8" v-if="selectedGame">
+          <h1>Assignments for {{ selectedGame.field }}</h1>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Game Level</th>
+                <th>Referee Status</th>
+                <th>Assigned Referee</th>
+                <th v-if="selectedRole.id === 2">Edit/Delete</th>
+              </tr>
+            </thead>
+              <tbody>
+                  <tr v-for="ass in assignment">
+                      <td>{{ ass.gameLevel }}</td>
+                      <td>{{ ass.refereeStatus }}</td>
+                      <td>{{ ass.refereeAssignmentId }}</td>
+                      <td v-if="selectedRole.id === 2">
+                        <button type="button" 
+                          class="btn btn-outline-secondary btn-sm"
+                          v-on:click="selectAssignmentToEdit(ass)">Edit</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                          v-on:click="postDeleteAssignment(ass)">Delete</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div v-if="selectedRole.id === 2">
+            <h3>{{ selectedAssignment === null ? "Add " : "Edit " }} Assignment</h3>
+            <form v-on:submit.prevent="postAssignment">
+              <div class="mb-3">
+                <label for="gameLevel" class="form-label">Game Level<span class="reqd">*</span></label>
+                <input type="text" v-model="assignmentForm.gameLevel" class="form-control" id="gameLevel" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="refereeStatus" class="form-label">Referee Status<span class="reqd">*</span></label>
+                <input type="text" v-model="assignmentForm.refereeStatus" class="form-control" id="refereeStatus" required="required">
+            </div>
+            <div class="mb-3">
+                <label for="refereeAssignmentId" class="form-label">Referee<span class="reqd">*</span></label>
+                <select class="form-select" aria-label="Default select example" v-model="assignmentForm.refereeAssignmentId"  id="refereeAssignmentId" @change='fetchRefereeData'>
+                    <option selected>Select Referee</option>
+                    <option v-for="ref in referee" :value= 'ref.id' >{{ ref.firstName }}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"> Assign </button>
+          </form> 
+        </div>
+      </div>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
