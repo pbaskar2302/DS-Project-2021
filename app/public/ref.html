@@ -41,47 +41,46 @@
           </div>
         </div>
       </nav>
+      <div class=" refhead row align-items-start">
+        <h2>Referees of Indiana Soccer Referees Association</h2>
+      </div>
       <div id="someApp" class="container">
-          <h1> Select type of User role to Login</h1>
-          <div class="list-group col-2" v-for="r in roles" v-on:click="selectRole(r)" 
+          <div class="col col-4">
+          <div v-for="r in roles" v-on:click="selectRole(r)" 
           :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
-            <button type="button" class="list-group-item list-group-item-action roletype" aria-current="true" width="5px">
-              {{ r.roletype}}
-            </button>
+            <span class="roletype">{{ r.roletype }}</span>
           </div>
-              <div class="col col-8" v-if="selectedRole">
-                <div class=" refhead row align-items-start">
-                    <h2>Referees of Indiana Soccer Referees Association</h2>
-                  </div>
-                <table class="table">
-                  <thead>
-                    <tr>  
-                      <th scope="col"> First Name </th>
-                      <th scope="col"> Last Name </th>
-                      <th scope="col"> Age </th>
-                      <th scope="col"> Grade </th>
-                      <th scope="col" v-if="selectedRole.id === 2"> Skill </th>
-                      <th scope="col" v-if="selectedRole.id === 2"> Edit/Delete </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="ref in referee">
-                      <td>{{ ref.firstName }}</td>
-                      <td>{{ ref.lastName }}</td>
-                      <td>{{ ref.age }}</td>
-                      <td>{{ ref.grade }}</td>
-                      <td v-if="selectedRole.id === 2">{{ ref.skill }}</td>
-                      <td v-if="selectedRole.id === 2">
-                        <button type="button" 
-                          class="btn btn-outline-secondary btn-sm"
-                          v-on:click="selectRefereeToEdit(ref)">Edit</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"
-                          v-on:click="postDeleteReferee(ref)">Delete</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h3 v-if="selectedRole.id === 2">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</h3>
+          </div>
+          <div class="col col-8" v-if="selectedRole">
+            <table class="table">
+              <thead>
+                <tr>  
+                  <th scope="col"> First Name </th>
+                  <th scope="col"> Last Name </th>
+                  <th scope="col"> Age </th>
+                  <th scope="col"> Grade </th>
+                  <th scope="col" v-if="selectedRole.id === 2"> Skill </th>
+                  <th scope="col" v-if="selectedRole.id === 2"> Edit/Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="ref in referee">
+                  <td>{{ ref.firstName }}</td>
+                  <td>{{ ref.lastName }}</td>
+                  <td>{{ ref.age }}</td>
+                  <td>{{ ref.grade }}</td>
+                  <td v-if="selectedRole.id === 2">{{ ref.skill }}</td>
+                  <td v-if="selectedRole.id === 2">
+                    <button type="button" 
+                      class="btn btn-outline-secondary btn-sm"
+                      v-on:click="selectRefereeToEdit(ref)">Edit</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                      v-on:click="postDeleteReferee(ref)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <h3 v-if="selectedRole.id === 2">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</h3>
           <form v-on:submit.prevent="postReferee" v-if="selectedRole.id === 2">
             <div class="mb-3">
               <label for="firstName" class="form-label"> First Name <span class="reqd">*</span></label>
@@ -107,20 +106,20 @@
             <button type="submit" class="btn btn-primary">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</button>
             <button type="button" class="btn btn-outline-secondary" v-if="selectedReferee" v-on:click="resetRefereeForm">Cancel</button>
           </form>
+          </div>
         </div>
-    </div>
-<!-- Optional JavaScript; choose one of the two! -->
+    <!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
--->
-<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 
-<script src="js/index.js"></script>
-</body>
+    <script src="js/index.js"></script>
+  </body>
 </html>

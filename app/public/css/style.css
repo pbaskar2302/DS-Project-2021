@@ -18,9 +18,19 @@ button:hover{
     border-radius: 4px ;
     font-size: 16px;
 }
-.refhead{
-    color: #06126b;
+table{
+    border: 5px solid black;
+}
+thead{
+    color: whitesmoke;
+    background-color: #06126b;
     text-align: center;
     margin-bottom: 20px;
-
+}
+tbody{
+    text-align: center;
+}
+.select:hover{
+    background-color: lightcyan;
+    border: black solid 2px;
 }

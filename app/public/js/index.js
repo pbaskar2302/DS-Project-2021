@@ -11,7 +11,9 @@ const SomeApp = {
             selectedReferee: null,
             refereeForm: {},
             gameForm: {},
-            selectedAssignment: null
+            selectedAssignment: null,
+            pastGame: {},
+            futureGame: {}
         }
     },
     computed: {
@@ -62,6 +64,30 @@ const SomeApp = {
             .then( (responseJson) => {
                 console.log(responseJson);
                 this.game = responseJson;
+            })
+            .catch( (err) => {
+                console.error(err);
+            })
+        },
+        fetchPastGameData()
+        {
+            fetch('/api/game/fetchPast.php')
+            .then( response => response.json() )
+            .then( (responseJson) => {
+                console.log(responseJson);
+                this.pastGame = responseJson;
+            })
+            .catch( (err) => {
+                console.error(err);
+            })
+        },
+        fetchFutureGameData()
+        {
+            fetch('/api/game/fetchFuture.php')
+            .then( response => response.json() )
+            .then( (responseJson) => {
+                console.log(responseJson);
+                this.futureGame = responseJson;
             })
             .catch( (err) => {
                 console.error(err);
@@ -338,11 +364,35 @@ const SomeApp = {
         resetAssignmentForm() {
             this.selectedAssignment = null;
             this.AssignmentSForm = {};
-        },
+        }
+        // matchrefid(a)
+        // {
+        //     this.selref=a;
+        //     fetch('api/assignment/grabname.php', {
+        //         method:'GET',
+        //         body: JSON.stringify(this.assignmentForm),
+        //         headers: {
+        //           "Content-Type": "application/json; charset=utf-8"
+        //         }
+        //       })
+        //       .then( response => response.json() )
+        //     .then( (responseJson) => {
+        //         console.log(responseJson);
+        //         this.name = responseJson;
+        //     })
+        //     .catch( (err) => {
+        //         console.error(err);
+        //     })
+        //     .catch( (error) => {
+        //         console.error(error);
+        //     });
+        //     return name.firstName;
+        // }
     },
     created() {
         // this.fetchGameData();
         this.fetchRoleData();
+        this.fetchPastGameData();
 }
 }
 

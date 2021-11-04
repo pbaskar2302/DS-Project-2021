@@ -6,15 +6,19 @@ require 'class/DbConnection.php';
 $db = DbConnection::getConnection();
 
 // Step 2: Create & run the query
-$sql = 'SELECT * FROM referee';
+$sql = 'SELECT * 
+FROM game
+WHERE gameDate> CURDATE()
+ AND gameTime > CURTIME()';
 $vars = [];
+
 $stmt = $db->prepare($sql);
 $stmt->execute($vars);
 
-$referee = $stmt->fetchAll();
+$futureGame = $stmt->fetchAll();
 
 // Step 3: Convert to JSON
-$json = json_encode($referee, JSON_PRETTY_PRINT);
+$json = json_encode($futureGame, JSON_PRETTY_PRINT);
 
 // Step 4: Output
 header('Content-Type: application/json');
