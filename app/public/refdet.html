@@ -16,42 +16,48 @@
         <h1> <a href="index.html"><img src="http://www.indianareferees.org/assets/102/6/logo-ir-2.png" alt="logo"></a> Indiana Soccer Referees Association </h1>
     </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="referees.html">Referees</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Reports
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="assignedGames.html">Assigned Games</a></li>
-                  <li><a class="dropdown-item" href="futureGames.html">Future games</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="assign.html">Assignments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="refdet.html">Referees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="games.html">Games</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Reports
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="reportdates.html">Referee Date based Reports</a></li>
+                <li><a class="dropdown-item" href="fetchunassigned.html">Games with "unassigned" status</a></li>
+                <li><a class="dropdown-item" href="reportnumber.html">Number of Assignments per game</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
-      </nav>
-      <div class=" refhead row align-items-start">
-        <h2>Referees of Indiana Soccer Referees Association</h2>
       </div>
+    </nav>
       <div id="someApp" class="container">
-          <div class="col col-4">
-          <div v-for="r in roles" v-on:click="selectRole(r)" 
-          :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
-            <span class="roletype">{{ r.roletype }}</span>
-          </div>
-          </div>
+        <h2> Select type of User role to Login</h2>
+        <div class="list-group col-2" v-for="r in roles" v-on:click="selectRole(r)" 
+        :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
+          <button type="button" class="list-group-item list-group-item-action roletype" aria-current="true" width="5px">
+            {{ r.roletype}}
+          </button>
+        </div>
           <div class="col col-8" v-if="selectedRole">
+            <h2> {{ selectedRole.id === 1 ? "List of" : "Add/Modify" }} Referees</h2>
             <table class="table">
               <thead>
                 <tr>  
@@ -60,7 +66,8 @@
                   <th scope="col"> Age </th>
                   <th scope="col"> Grade </th>
                   <th scope="col" v-if="selectedRole.id === 2"> Skill </th>
-                  <th scope="col" v-if="selectedRole.id === 2"> Edit/Delete </th>
+                  <th scope="col" v-if="selectedRole.id === 2"> </th>
+                  <th scope="col" v-if="selectedRole.id === 2"> </th>
                 </tr>
               </thead>
               <tbody>
@@ -74,6 +81,8 @@
                     <button type="button" 
                       class="btn btn-outline-secondary btn-sm"
                       v-on:click="selectRefereeToEdit(ref)">Edit</button>
+                  </td>
+                  <td  v-if="selectedRole.id === 2">
                     <button type="button" class="btn btn-outline-secondary btn-sm"
                       v-on:click="postDeleteReferee(ref)">Delete</button>
                   </td>
@@ -96,9 +105,14 @@
               <input type="number" v-model="refereeForm.age" class="form-control" id="age" required="required">
             </div>
             <div class="mb-3">
-              <label for="grade" class="form-label"> Grade <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.grade" class="form-control" id="grade" required="required">
-            </div>
+              <label for="grade" class="form-label">Referee Status<span class="reqd">*</span></label>
+              <select class="form-select" aria-label="Default select example"  id="grade" v-model="refereeForm.grade" required="required">
+                <option value='A'> A </option>
+                <option value='B'> B </option>
+                <option value='C'> C </option>
+                <option value='D'> D </option>
+            </select>
+          </div>
             <div class="mb-3">
               <label for="skill" class="form-label"> Skill <span class="reqd">*</span></label>
               <input type="number" v-model="refereeForm.skill" class="form-control" id="skill" required="required">

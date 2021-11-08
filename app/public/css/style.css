@@ -5,16 +5,20 @@ header{
 body{
     font-family: Arial, Helvetica, sans-serif;
 }
+div{
+    margin:5px;
+}
 button{
-	background-color: #cf0f29; 
-	border:2px solid #06126b;
+	background-color: #06126b; 
+	border:2px solid #cf0f29;
     border-radius: 4px ;
     font-size: 16px;
     color: whitesmoke;
 }
 button:hover{
-	background-color: lightcoral;
+	background-color:white;
 	border: 2px solid #06126b;
+    color: red;
     border-radius: 4px ;
     font-size: 16px;
 }
@@ -33,4 +37,22 @@ tbody{
 .select:hover{
     background-color: lightcyan;
     border: black solid 2px;
+}
+
+#main_head {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#main_img {
+    opacity: 1;
+    padding-bottom: 10px;
+}
+
+#main_img:hover {
+    opacity: 0.5;
+}
+
+#span_main {
+    font-weight: bold;
 }

@@ -13,7 +13,12 @@ const SomeApp = {
             gameForm: {},
             selectedAssignment: null,
             pastGame: {},
-            futureGame: {}
+            selectedRefereeDet: null,
+            futureGame: {},
+            assignDet: {},
+            dateForm: {},
+            unass: {},
+            gamescnt: {}
         }
     },
     computed: {
@@ -69,9 +74,10 @@ const SomeApp = {
                 console.error(err);
             })
         },
-        fetchPastGameData()
+        fetchPastGameData(r)
         {
-            fetch('/api/game/fetchPast.php')
+            this.selectedRefereeDet= r;
+            fetch('/api/assignment/fetchPast.php/?referee=' + r.id)
             .then( response => response.json() )
             .then( (responseJson) => {
                 console.log(responseJson);
@@ -81,9 +87,10 @@ const SomeApp = {
                 console.error(err);
             })
         },
-        fetchFutureGameData()
+        fetchFutureGameData(r)
         {
-            fetch('/api/game/fetchFuture.php')
+            this.selectedRefereeDet= r;
+            fetch('/api/assignment/fetchFuture.php/?referee=' + r.id)
             .then( response => response.json() )
             .then( (responseJson) => {
                 console.log(responseJson);
@@ -103,7 +110,10 @@ const SomeApp = {
         },
         postNewAssignment(evt) {
             this.assignmentForm.gameAssignmentId = this.selectedGame.id;
-
+            if ( this.assignment.length >= 4) {
+              alert("4 referees have already been assigned to this game");
+              return;
+          }
             fetch('api/assignment/create.php', {
                 method:'POST',
                 body: JSON.stringify(this.assignmentForm),
@@ -126,12 +136,44 @@ const SomeApp = {
             this.referee = [];
             this.fetchRefereeData();
             this.fetchGameData();
-            // this.fetchAssignmentData();
-            // this.bookForm = Object.assign({}, this.selectedBook);
         },
         selectRefereeToEdit(o) {
             this.selectedReferee = o;
             this.refereeForm = Object.assign({}, this.selectedReferee);
+        },
+        selectRef() {
+            this.selectedRefereeDet= this.dateForm;
+            fetch('/api/referee/fetchRef.php/?refereeAssignmentId=' + this.dateForm.refereeAssignmentId + '&startDate=' + this.dateForm.startDate + '&endDate=' + this.dateForm.endDate)
+
+            .then( response => response.json() )
+            .then( (responseJson) => {
+                console.log(responseJson);
+                this.assignDet = responseJson;
+            })
+            .catch( (err) => {
+                console.error(err);
+            });
+        },
+        postDeleteRefAssign(a)
+        {
+          if (!confirm("Are you sure you want to decline?")) {
+            return;
+          }
+          console.log("Decline!", a);
+  
+          fetch('api/assignment/deleteRef.php', {
+              method:'POST',
+              body: JSON.stringify(a),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            })
+            .then( response => response.json() )
+            .then( json => {
+              console.log("Returned from post:", json);
+              // TODO: test a result was returned!
+              this.futureGame = json;
+            })
         },
         postDeleteReferee(o) {
             if (!confirm("Are you sure you want to delete "+o.firstName+"?")) {
@@ -234,7 +276,7 @@ const SomeApp = {
               .then( json => {
                 console.log("Returned from post:", json);
                 // TODO: test a result was returned!
-                this.referee = json;
+                this.game = json;
     
                 // reset the form
                 this.resetGameForm();
@@ -297,21 +339,13 @@ const SomeApp = {
             this.selectedGame = null;
             this.gameForm = {};
         },
-        // selectAssignment(a) {
-        //     if (a == this.selectedAssignment) {
-        //         return;
-        //     }
-        //     this.selectedAssignment = a;
-        //     this.assignment = [];
-        //     this.fetchAssignmentData(this.selectedGame);
-        // },
         postDeleteAssignment(o) {
             if (!confirm("Are you sure you want to delete?")) {
               return;
             }
             console.log("Delete!", o);
     
-            fetch('api/assignment/delete.php', {
+            fetch('api/assignment/deleteGame.php', {
                 method:'POST',
                 body: JSON.stringify(o),
                 headers: {
@@ -363,37 +397,38 @@ const SomeApp = {
         },
         resetAssignmentForm() {
             this.selectedAssignment = null;
-            this.AssignmentSForm = {};
+            this.assignmentForm = {};
+        },
+
+        fetchUnassignedData() {
+          fetch('/api/game/fetchUnassigned.php')
+          .then( response => response.json() )
+          .then( (responseJson) => {
+              console.log(responseJson);
+              this.unass = responseJson;
+          })
+          .catch( (err) => {
+              console.error(err);
+          });
+        },
+        fetchNumberGame() {
+          fetch('/api/game/fetchNumGames.php')
+          .then( response => response.json() )
+          .then( (responseJson) => {
+              console.log(responseJson);
+              this.gamescnt = responseJson;
+          })
+          .catch( (err) => {
+              console.error(err);
+          });
         }
-        // matchrefid(a)
-        // {
-        //     this.selref=a;
-        //     fetch('api/assignment/grabname.php', {
-        //         method:'GET',
-        //         body: JSON.stringify(this.assignmentForm),
-        //         headers: {
-        //           "Content-Type": "application/json; charset=utf-8"
-        //         }
-        //       })
-        //       .then( response => response.json() )
-        //     .then( (responseJson) => {
-        //         console.log(responseJson);
-        //         this.name = responseJson;
-        //     })
-        //     .catch( (err) => {
-        //         console.error(err);
-        //     })
-        //     .catch( (error) => {
-        //         console.error(error);
-        //     });
-        //     return name.firstName;
-        // }
     },
     created() {
-        // this.fetchGameData();
         this.fetchRoleData();
-        this.fetchPastGameData();
-}
+        this.fetchRefereeData();
+        this.fetchUnassignedData();
+        this.fetchNumberGame(); 
+  }
 }
 
 Vue.createApp(SomeApp).mount('#someApp');

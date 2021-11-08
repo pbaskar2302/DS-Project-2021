@@ -16,123 +16,131 @@
         <h1> <a href="index.html"><img src="http://www.indianareferees.org/assets/102/6/logo-ir-2.png" alt="logo"></a> Indiana Soccer Referees Association </h1>
     </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="referees.html">Referees</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Reports
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="assignedGames.html">Assigned Games</a></li>
-                  <li><a class="dropdown-item" href="futureGames.html">Future games</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="assign.html">Assignments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="refdet.html">Referees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="games.html">Games</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Reports
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="reportdates.html">Referee Date based Reports</a></li>
+                <li><a class="dropdown-item" href="fetchunassigned.html">Games with "unassigned" status</a></li>
+                <li><a class="dropdown-item" href="reportnumber.html">Number of Assignments per game</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-    <div class=" refhead row align-items-start">
-    <h2>Add an Assignment</h2>
-    </div>
     <div id="someApp" class="container">
-      <div class="col col-4">
-      <div v-for="r in roles" v-on:click="selectRole(r)" 
-      :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
-        <span class="roletype">{{ r.roletype }}</span>
-      </div>
-      </div>
-      <div class="col col-8" v-if="selectedRole">
-        <table class="table">
-          <thead>
-            <tr>  
-              <th scope="col"> Field </th>
-              <th scope="col"> Game Time </th>
-              <th scope="col"> Game Date </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="gam in game" v-on:click="selectGame(gam)" 
-            :class="['game', {selected: selectedGame && gam.id == selectedGame.id}]">
-              <td>{{ gam.field }}</td>
-              <td>{{ gam.gameTime }}</td>
-              <td>{{ gam.gameDate }}</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        <div class="col col-8" v-if="selectedGame">
-          <h1>Assignments for {{ selectedGame.field }}</h1>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Referee Status</th>
-                <th>Assigned Referee</th>
-                <th v-if="selectedRole.id === 2">Edit/Delete</th>
-              </tr>
-            </thead>
+          <h1> Select type of User role to Login</h1>
+          <div class="list-group col-2" v-for="r in roles" v-on:click="selectRole(r)" 
+          :class="['roles', {selected: selectedRole && r.id == selectedRole.id}]">
+            <button type="button" class="list-group-item list-group-item-action roletype" aria-current="true" width="5px">
+              {{ r.roletype}}
+            </button>
+          </div>
+          <div class="col col-8" v-if="selectedRole">
+          <h2> Select a game to {{ selectedRole.id === 1 ? "View" : "Add/Modify" }} Assignments</h2>
+            <table class="table">
+              <thead>
+                <tr>  
+                  <th scope="col"> Field </th>
+                  <th scope="col"> Game Time </th>
+                  <th scope="col"> Game Date </th>
+                  <th scope="col"> Select</th>
+                </tr>
+              </thead>
               <tbody>
-                  <tr v-for="ass in assignment">
-                      <td>{{ ass.refereeStatus }}</td>
-                      <td>{{ ass.refereeAssignmentId }}</td>
-                      <td v-if="selectedRole.id === 2">
-                        <button type="button" 
-                          class="btn btn-outline-secondary btn-sm"
-                          v-on:click="selectAssignmentToEdit(ass)">Edit</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"
-                          v-on:click="postDeleteAssignment(ass)">Delete</button>
-                      </td>
-                  </tr>
+                <tr v-for="gam in game">
+                  <td >{{ gam.field }}</td>
+                  <td>{{ gam.gameTime }}</td>
+                  <td>{{ gam.gameDate }}</td>
+                  <td> <button type="button" 
+                    class="btn btn-outline-secondary btn-sm"
+                    v-on:click="selectGame(gam)" 
+                :class="['game', {selected: selectedGame && gam.id == selectedGame.id}]"> Select </button></td>
+                </tr>
               </tbody>
-          </table>
-          <div v-if="selectedRole.id === 2">
-            <h3>{{ selectedAssignment === null ? "Add " : "Edit " }} Assignment</h3>
-            <form v-on:submit.prevent="postAssignment">
-              <!-- <div class="mb-3">
-                <label for="gameLevel" class="form-label">Game Level<span class="reqd">*</span></label>
-                <input type="text" v-model="assignmentForm.gameLevel" class="form-control" id="gameLevel" required="required">
-            </div> -->
-            <div class="mb-3">
-                <label for="refereeStatus" class="form-label">Referee Status<span class="reqd">*</span></label>
-                <select class="form-select" aria-label="Default select example"  id="refereeStatus" v-model="assignmentForm.refereeStatus">
-                  <option selected>Select Referee Status</option>
-                  <option value='Unassigned'> Unassigned</option>
-                  <option value='Assigned'> Assigned</option>
-                  <option value='Accepted'> Accepted</option>
-                  <option value='Tentative'> Tentative</option>
-              </select>
+            </table>
             </div>
-            <div class="mb-3">
-                <label for="refereeAssignmentId" class="form-label">Referee<span class="reqd">*</span></label>
-                <select class="form-select" aria-label="Default select example" v-model="assignmentForm.refereeAssignmentId"  id="refereeAssignmentId" @change='fetchRefereeData'>
-                    <option selected>Select Referee</option>
-                    <option v-for="ref in referee" :value= 'ref.id' >{{ ref.firstName }}</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary"> Assign </button>
-          </form> 
-        </div>
+            <div class="col col-8" v-if="selectedGame">
+                <h1>Assignments for {{ selectedGame.field }}</h1>
+      
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Referee Status</th>
+                      <th>Assigned Referee</th>
+                      <th v-if="selectedRole.id === 2">Edit/Delete</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                        <tr class="select" v-for="ass in assignment">
+                            <td>{{ ass.refereeStatus }}</td>
+                            <td>{{ ass.firstName }}</td>
+                            <td v-if="selectedRole.id === 2">
+                              <button type="button" 
+                                class="btn btn-outline-secondary btn-sm"
+                                v-on:click="selectAssignmentToEdit(ass)">Edit</button>
+                              <button type="button" class="btn btn-outline-secondary btn-sm"
+                                v-on:click="postDeleteAssignment(ass)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div v-if="selectedRole.id === 2">
+                  <h3>{{ selectedAssignment === null ? "Add " : "Edit " }} Assignment</h3>
+                  <form v-on:submit.prevent="postAssignment">
+                  <div class="mb-3">
+                      <label for="refereeStatus" class="form-label">Referee Status<span class="reqd">*</span></label>
+                      <select class="form-select" aria-label="Default select example"  id="refereeStatus" v-model="assignmentForm.refereeStatus" required="required">
+                        <option value='Unassigned'> Unassigned</option>
+                        <option value='Assigned'> Assigned</option>
+                        <option value='Accepted'> Accepted</option>
+                        <option value='Tentative'> Tentative</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                      <label for="refereeAssignmentId" class="form-label">Referee<span class="reqd">*</span></label>
+                      <select class="form-select" aria-label="Default select example" v-model="assignmentForm.refereeAssignmentId"  id="refereeAssignmentId" @change='fetchRefereeData' required="required">
+                          <option v-for="ref in referee" :value= 'ref.id' >{{ ref.firstName }}</option>
+                      </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary"> {{ selectedAssignment === null ? "Add " : "Edit " }} </button>
+                  <button type="button" class="btn btn-outline-secondary" v-if="selectedAssignment" v-on:click="resetAssignmentForm">Cancel</button>
+                </form> 
+              </div>
       </div>
-    </div>
-    <!-- Optional JavaScript; choose one of the two! -->
+      </div>
+      <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        -->
+        <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 
-    <script src="js/index.js"></script>
-  </body>
+        <script src="js/index.js"></script>
+    </body>
 </html>

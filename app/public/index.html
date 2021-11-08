@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@next"></script>
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <title>Indiana Soccer Referees Association</title>
   </head>
@@ -15,129 +16,108 @@
         <h1> <a href="index.html"><img src="http://www.indianareferees.org/assets/102/6/logo-ir-2.png" alt="logo"></a> Indiana Soccer Referees Association </h1>
     </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="referees.html">Referees</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Reports
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="assign.html">Assignments</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="refdet.html">Referees</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="games.html">Games</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Reports
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="assignedGames.html">Assigned Games</a></li>
+                  <li><a class="dropdown-item" href="futureGames.html">Future games</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class = "container">
+          <div class = "row">
+              <h1> Welcome to Indiana Soccer Referees Association Portal</h1>
+          </div>
+        <div class = "row">
+          <div class = "col-4 text-center">
+            <a href="assign.html">
+                <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img"> <a>
+                <p id="span_main">View/Add/Modify Assignments</p>
+                <a href="assign.html"><button>Assignments</button>
+            </a>
+          </div>
+          <div class = "col-4 text-center">
+            <a href="refdet.html">
+              <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img"> </a>
+              <p id="span_main">View/Add/Modify Referees</p>
+              <a href="refdet.html"><button>Referees</button>
+            </a>
+          </div>
+          <div class = "col-4 text-center">
+                <a href="games.html">
+                <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img"></a>
+                <p id="span_main">View/Add/Modify Games</p>
+                <a href="games.html"><button>Games</button>
+                </a>
+          </div>
+        </div>
+        <div class = "row" id="main_head">
+          <h3>Logging in as a Referee? Click here to Decline an assignment</h3>
+          <div class="col-4" id="main_head">
+            <a href="referees.html"><button>
+                Click Here
+            </button></a>
+          </div>
+          <h3>Click to view or download report</h3>
+          <div class = "col-4 text-center" id="main_head">
+            <a href="reportdates.html">
+              <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img">
+            </a>
+            <p id="span_main">Report that lists all games assigned to a referee in a given date range</p>
+            <button onclick="window.location.href='reportdates.html'">View/Download Report</button>
+        </div>
+        <div class = "col-4 text-center" id="main_head">
+          <a href="fetchunassigned.html">
+            <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img">
+          </a>
+          <p id="span_main">Report that lists all future games with at least one position of status “Unassigned”</p>
+          <button onclick="window.location.href='fetchUnassigned.html'">View/Download Report</button>
+        </div>
+        <div class = "col-4 text-center" id="main_head">
+              <a href="reportnumber.html">
+              <img src="img/referee_2.png" class="rounded mx-auto d-block" alt="..." id="main_img">
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="assignedGames.html">Assigned Games</a></li>
-                <li><a class="dropdown-item" href="futureGames.html">Future games</a></li>
-              </ul>
-            </li>
-          </ul>
+              <p id="span_main">Report to view number of assignments for each game</p>
+              <button onclick="window.location.href='reportnumber.html'">View/Download Report</button>
+        </div>
         </div>
       </div>
-    </nav>
 
-
-      <div class="row">
-
-        <div class="col-6">
-
-
-          <h1 class="display-4"> Mission Statement</h1>
-
-          <p class="lead">
-            To deliver the best futbolostic experience for players at any skill level, and create an enviroment of the highest integrity and sportsmanship.
-          </p>
-
-
-
-          <h1 class="display-4"> Vision Statement</h1>
-
-          <p class="lead">
-
-            To become the most loved Soccer Association in America.
-
-          </p>
-        </div>
-        <div class="col-6">
-
-
-          <img src="https://cdn4.sportngin.com/attachments/photo/6755/6607/ussf-osi-newuniform-large_large.jpg" width=400>
-       
-       
-       
-        </div>
-      </div>
-    <div class="row">
-          <blockquote class="blockquote text-center">
-          <h1 class="display-4"> Founders </h1>
-          </blockquote>
-    </div>
-          <div class="row">
-            <div class="col-6">
-              <img src="https://kelley.iu.edu/images/vitae/bkprabha-768.jpg" width="350" height="350">
-              <br>
-              <br>
-              <p><em>“Regardless of the situation, regardless of the scoreboard, you’re going to be successful because you’ve put in all th
-                e time, all the effort, all the hard work, and you know that it’s going to pay off.”</em></p>
-
-            </div>
-            <div class="col-6">
-              <img src="https://kelley.iu.edu/images/vitae/tomgreg-768.jpg" width="350" height="350">
-              <p><em>“So many people believed in me when I didn’t believe in myself. So many people doubted me and motivated me 
-                every single day to be who I am. I failed so many times and got back up. I’ve been through the toughest times with my family, 
-                but I’m still standing.”
-              </em></p>
-
-            </div>
-          </div>
-
-
-
-
-
-
-        <div class="row">
-      
-          <div class="col-12">
-            <br>
-            <br>
-           
-            <blockquote class="blockquote text-center">
-              <h1 class="display-4"> Assignment Rules </h1>
-            </blockquote>
-          
-            <ol class="list-group list-group-numbered">
-              <li class="list-group-item">Professional games should have at least 4 referees</li>
-              <li class="list-group-item"> Mid level games should have at least 3 referees</li>
-              <li class="list-group-item">Low level recreational games should have at least 1 referees</li>
-              <li class="list-group-item">Referees must be experienced in that specific position when playing in non-recreational games</li>
-              <li class="list-group-item">Prioritize referees with high skill when playing for important games such as finals</li>
-
-
-            </ol>
-
-
-
-          </div>
-        </div>
-      
-    
-
-      </div>
-
-
- 
     <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-  </body>
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+
+<script src="js/index.js"></script>
+</body>
 </html>

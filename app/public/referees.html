@@ -16,31 +16,38 @@
         <h1> <a href="index.html"><img src="http://www.indianareferees.org/assets/102/6/logo-ir-2.png" alt="logo"></a> Indiana Soccer Referees Association </h1>
     </header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="referees.html">Referees</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Reports
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="assignedGames.html">Assigned Games</a></li>
-                  <li><a class="dropdown-item" href="futureGames.html">Future games</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="assign.html">Assignments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="refdet.html">Referees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="games.html">Games</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Reports
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="reportdates.html">Referee Date based Reports</a></li>
+                <li><a class="dropdown-item" href="fetchunassigned.html">Games with "unassigned" status</a></li>
+                <li><a class="dropdown-item" href="reportnumber.html">Number of Assignments per game</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
       <div id="someApp" class="container">
           <h1> Select type of User role to Login</h1>
           <div class="list-group col-2" v-for="r in roles" v-on:click="selectRole(r)" 
@@ -49,66 +56,60 @@
               {{ r.roletype}}
             </button>
           </div>
-              <div class="col col-8" v-if="selectedRole">
-                <div class=" refhead row align-items-start">
-                    <h2>Referees of Indiana Soccer Referees Association</h2>
-                  </div>
+              <div class="row" v-if="selectedRole">
+                <h1> Select referee to {{ selectedRole.id === 1 ? "View" : "View and Decline" }} Assignments</h1>
+                <div class ="row">
+                  <div class="col-2" v-for="r in referee" v-on:click="fetchPastGameData(r); fetchFutureGameData(r)">
+                    <button type="button" class="list-group-item list-group-item-action roletype" aria-current="true" width="5px">
+                      {{ r.firstName}} {{ r.lastName}}
+                    </button>
+                    </div>
+                </div>
+              <div v-if="selectedRefereeDet">
+                <h2>Past Game details for {{ selectedRefereeDet.firstName }}</h2>
                 <table class="table">
                   <thead>
                     <tr>  
-                      <th scope="col"> First Name </th>
-                      <th scope="col"> Last Name </th>
-                      <th scope="col"> Age </th>
-                      <th scope="col"> Grade </th>
-                      <th scope="col" v-if="selectedRole.id === 2"> Skill </th>
-                      <th scope="col" v-if="selectedRole.id === 2"> Edit/Delete </th>
+                      <th scope="col"> Referee Status </th>
+                      <th scope="col"> Game Time </th>
+                      <th scope="col"> Game Date </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="ref in referee">
-                      <td>{{ ref.firstName }}</td>
-                      <td>{{ ref.lastName }}</td>
-                      <td>{{ ref.age }}</td>
-                      <td>{{ ref.grade }}</td>
-                      <td v-if="selectedRole.id === 2">{{ ref.skill }}</td>
+                    <tr v-for="refp in pastGame">
+                      <td>{{ refp.refereeStatus }}</td>
+                      <td>{{ refp.gameTime }}</td>
+                      <td>{{ refp.gameDate }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h2>Future Game details for {{ selectedRefereeDet.firstName }}</h2>
+                <table class="table">
+                  <thead>
+                    <tr>  
+                      <th scope="col"> Referee Status </th>
+                      <th scope="col"> Field </th>
+                      <th scope="col"> Game Time </th>
+                      <th scope="col"> Game Date </th>
+                      <th v-if="selectedRole.id === 2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="reff in futureGame">
+                      <td>{{ reff.refereeStatus }}</td>
+                      <td>{{ reff.field }}</td>
+                      <td>{{ reff.gameTime }}</td>
+                      <td>{{ reff.gameDate }}</td>
                       <td v-if="selectedRole.id === 2">
-                        <button type="button" 
-                          class="btn btn-outline-secondary btn-sm"
-                          v-on:click="selectRefereeToEdit(ref)">Edit</button>
                         <button type="button" class="btn btn-outline-secondary btn-sm"
-                          v-on:click="postDeleteReferee(ref)">Delete</button>
+                        v-on:click="postDeleteRefAssign(reff)">Decline</button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <h3 v-if="selectedRole.id === 2">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</h3>
-          <form v-on:submit.prevent="postReferee" v-if="selectedRole.id === 2">
-            <div class="mb-3">
-              <label for="firstName" class="form-label"> First Name <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.firstName"
-               class="form-control" id="firstName" required="required">
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label"> Last Name <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.lastName" class="form-control" id="lastName" required="required">
-            </div>
-            <div class="mb-3">
-              <label for="age" class="form-label"> Age <span class="reqd">*</span></label>
-              <input type="number" v-model="refereeForm.age" class="form-control" id="age" required="required">
-            </div>
-            <div class="mb-3">
-              <label for="grade" class="form-label"> Grade <span class="reqd">*</span></label>
-              <input type="text" v-model="refereeForm.grade" class="form-control" id="grade" required="required">
-            </div>
-            <div class="mb-3">
-              <label for="skill" class="form-label"> Skill <span class="reqd">*</span></label>
-              <input type="number" v-model="refereeForm.skill" class="form-control" id="skill" required="required">
-            </div>
-            <button type="submit" class="btn btn-primary">{{ selectedReferee === null ? "Add " : "Edit " }} Referee</button>
-            <button type="button" class="btn btn-outline-secondary" v-if="selectedReferee" v-on:click="resetRefereeForm">Cancel</button>
-          </form>
-        </div>
-    </div>
+              </div>
+              </div>
+      </div>
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
