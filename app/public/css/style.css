@@ -7,7 +7,6 @@ body{
 }
 button{
 	background-color: #06126b; 
-	border:2px solid #cf0f29;
     border-radius: 4px ;
     font-size: 16px;
     color: whitesmoke;
@@ -15,7 +14,7 @@ button{
 button:hover{
 	background-color:white;
 	border: 2px solid #06126b;
-    color: red;
+    color:#06126b;
     border-radius: 4px ;
     font-size: 16px;
 }
